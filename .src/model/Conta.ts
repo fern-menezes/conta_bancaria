@@ -62,7 +62,7 @@ export class Conta{
 
 	public sacar (valor: number): boolean {
 		if(valor > this._saldo){
-			console.log("Saldo Insuficiente!");
+			console.log("⚠️ Saldo Insuficiente! ⚠️");
 			return false;
 		}
 
@@ -71,7 +71,7 @@ export class Conta{
 	}
 
 	public depositar (valor: number){
-		this._saldo -=valor;
+		this._saldo +=valor;
 	}
 
 	public visualizar(){
@@ -85,13 +85,13 @@ export class Conta{
 				tipo = "Conta Poupança";
 				break;
 			default:
-				tipo = "Tipo Inválido";
+				tipo = "Tipo Inválido ⚠️";
 		}
 		
     //usar os métodos get e set para gerar as informações no console
-        console.log("**********************************************");
+        console.log("==============================================");
         console.log("               DADOS DA CONTA                 ");
-        console.log("**********************************************");
+        console.log("==============================================");
         console.log(`Numero da Conta: ${this._numero}`);
         console.log(`Numero da Agência: ${this._agencia}`);
         console.log(`Tipo da Conta: ${tipo}`);
