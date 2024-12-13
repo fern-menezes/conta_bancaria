@@ -1,4 +1,4 @@
-export class Conta{
+export abstract class Conta{
 
     /**Definir o modelo de dados | por boas praticas no Typescript usa-se o _ na frente da palavra para indicar que ela é privada*/
     private _numero: number;
