@@ -14,13 +14,13 @@ export function main(){
     const contas = new ContaControler();
 
     //Novas Instâncias da Classe ContaCorrente (Objetos)
-    contas.cadastrar(new ContaCorrente(contas.gerarNumero(), 1234, 1, 'Bob Esponja Calça Quadrada', 5000, 1000.00));
-    contas.cadastrar(new ContaCorrente(contas.gerarNumero(), 4567, 1, 'Lula Molusco', 1000.00, 100.00));
-    contas.cadastrar(new ContaCorrente(contas.gerarNumero(), 1213, 1, 'Patrick EStrela', 1000.00, 100.00));
+    contas.cadastrar(new ContaCorrente(contas.gerarNumero(), 123, 1, 'Bob Esponja Calça Quadrada', 5000, 1000.00));
+    contas.cadastrar(new ContaCorrente(contas.gerarNumero(), 456, 1, 'Lula Molusco', 1000.00, 100.00));
+    contas.cadastrar(new ContaCorrente(contas.gerarNumero(), 121, 1, 'Patrick EStrela', 1000.00, 100.00));
  
     // Novas Instâncias da Classe ContaPoupança (Objetos)
-    contas.cadastrar(new ContaPoupanca(contas.gerarNumero(), 7891, 2, "Seu Sirigueijo", 1000000, 10));
-    contas.cadastrar(new ContaPoupanca(contas.gerarNumero(), 1011, 2, "Sandy Bochechas", 15000, 15));
+    contas.cadastrar(new ContaPoupanca(contas.gerarNumero(), 789, 2, "Seu Sirigueijo", 1000000, 10));
+    contas.cadastrar(new ContaPoupanca(contas.gerarNumero(), 101, 2, "Sandy Bochechas", 15000, 15));
     
 
     console.log('')
@@ -49,7 +49,7 @@ export function main(){
         console.log("Entre com a opção desejada: ");
         opcao = readlinesync.questionInt("");
 
-        console.log(colors.reset); 
+        
 
         if(opcao == 9) {
             console.log(colors.bg.black, colors.fg.bluestrong);
@@ -64,7 +64,8 @@ export function main(){
 
         switch(opcao){
             case 1:
-                console.log(colors.bg.black, colors.fg.bluestrong, "Criar Conta \n");
+                console.log(colors.bg.black, colors.fg.bluestrong);
+                console.log("Criar Conta \n");
                 agencia = readlinesync.questionInt('Digite o numero da agencia: \n')
 
                 console.log("Digite o Nome do Titular: ");
@@ -72,86 +73,126 @@ export function main(){
                 console.log("Escolha o Tipo da Conta: ");
                 tipo = readlinesync.keyInSelect(tipoContas, "", {cancel: false}) + 1;
 
-                console.log("Informe o saldo da conta: ", colors.reset);
+                console.log("Informe o saldo da conta: ");
                 saldo = readlinesync.questionFloat('');
 
                 switch(tipo){
                     case 1:
-                        console.log(colors.bg.black, colors.fg.bluestrong,"Digite o Limite da Conta: ");
+                        console.log("Digite o Limite da Conta: ");
                         limite = readlinesync.questionFloat('')
                         contas.cadastrar(new ContaCorrente(contas.gerarNumero(), agencia, tipo, titular, saldo, limite))
-                        console.log(colors.reset); 
+                        
                     break;
                     case 2:
-                        console.log(colors.bg.black, colors.fg.bluestrong,"Digite o dia do Aniversário da Poupança: ");
+                        console.log("Digite o dia do Aniversário da Poupança: ");
                         aniversario = readlinesync.questionInt('');
                         contas.cadastrar(new ContaPoupanca(contas.gerarNumero(), agencia, tipo, titular, saldo, aniversario))
-                        console.log(colors.reset); 
+                        
                         break;
                 }
                 keyPress();
                 break;
 
             case 2:
-                console.log("🗒️Listar todas as contas");
+                console.log("🗒️ Listar todas as contas");
                 contas.listarTodas();
                 
                 keyPress();
                 break;
 
             case 3:
-                console.log(colors.bg.black, colors.fg.bluestrong,"Consultar dados da conta - Por número");
+                console.log("🔠 Consultar dados da conta - Por número");
                 console.log("Digite o número da conta: ");
                 numero = readlinesync.questionInt('');
 
 
                 contas.procurarPorNumero(numero);
 
-                console.log(colors.reset); 
+                 
                 keyPress();
                 break;
 
             case 4:
-                console.log("Atualizar dados da conta");
+                console.log("📝 Atualizar dados da conta");
 
+                agencia = readlinesync.questionInt('Digite o novo numero da agencia: \n')
 
+                console.log("Digite o novo número da conta: ");
+                numero = readlinesync.questionInt('');
+
+                let conta = contas.buscarNoArray(numero);
+
+                if(conta !== null){
+
+                    console.log("Digite o novo nome do Titular: ");
+                    titular = readlinesync.question('');
+
+                    console.log("Escolha o Tipo da Conta: ");
+                    tipo = readlinesync.keyInSelect(tipoContas, "", {cancel: false}) + 1;
+
+                    console.log("Informe o saldo da conta: ");
+                    saldo = readlinesync.questionFloat('');
+
+                    tipo = conta.tipo;
+
+                switch(tipo){
+                    case 1:
+                        console.log("Digite o Limite da Conta: ");
+                        limite = readlinesync.questionFloat('')
+                        contas.atualizar(new ContaCorrente(numero, agencia, tipo, titular, saldo, limite));
+                        
+                    break;
+                    case 2:
+                        console.log("Digite o dia do Aniversário da Poupança: ");
+                        aniversario = readlinesync.questionInt('');
+                        contas.atualizar(new ContaPoupanca(numero, agencia, tipo, titular, saldo, aniversario));
+                    break;
+                }
+                }else{
+                    console.log("\nConta Não Encontrada!")
+                }
+               
                 keyPress();
                 break;
 
             case 5:
-                console.log("Apagar uma conta");
-                
+                console.log("🚮 Apagar uma conta");
+
+                console.log("Digite o número da conta: ");
+                numero = readlinesync.questionInt('');
+                contas.deletar(numero);
                 
                 keyPress();
                 break;
 
 
             case 6:
-                console.log("Saque");
+                console.log("💵 Saque");
                 
                 keyPress();
                 break;
 
             case 7:
-                console.log("Depósito");
+                console.log("💰 Depósito");
                 
                 keyPress();
                 break;
 
             case 8:
-                console.log("Transferência entre contas");
+                console.log("📤 Transferência entre contas");
                 
                 keyPress();
                 break;
 
             default:
                 console.log("Opção Inválida!❌");
+                console.log(colors.reset);
                 break;
                         
         }
     }
 };
-//console.log(colors.reset);
+console.log(colors.reset);
 
 export function sobre(): void{
     console.log(colors.bg.black, colors.fg.bluestrong,"\n========================================================");
