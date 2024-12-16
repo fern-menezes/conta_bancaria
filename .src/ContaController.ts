@@ -2,14 +2,21 @@ import { Conta } from "./model/Conta";
 import { ContaRepository } from "./model/ContaRepository";
 
 export class ContaControler implements ContaRepository{
-
+    
     //Coleção Array que vai armazenar os objetos Conta
     private listaContas = new Array<Conta>()
 
     //Controlar os números das contas
     public numero: number =0;
 
-    
+    //filtragem de dados
+    procurarPorTitular(titular: string): void {
+        let buscarPorTitular = this.listaContas.filter(conta => conta.titular.toUpperCase().includes(titular.toUpperCase()))
+        
+    //lstagem dos dados
+        buscarPorTitular.forEach(conta => conta.visualizar());
+    }
+
     procurarPorNumero(numero: number): void {
         const buscaConta = this.buscarNoArray(numero);
 
