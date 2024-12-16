@@ -96,6 +96,6 @@ export abstract class Conta{
         console.log(`Numero da Agência: ${this._agencia}`);
         console.log(`Tipo da Conta: ${tipo}`);
         console.log(`Nome do titular da Conta: ${this._titular}`);
-        console.log(`Saldo da Conta: ${this._saldo}`);
+        console.log(`Saldo da Conta: R$${this._saldo}`);
 	}
 }
